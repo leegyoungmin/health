@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_layout"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    tools:context=".membertab"
+    android:layout_marginTop="15dp"
+    app:tabTextColor="#707070"
+    app:tabSelectedTextColor="@color/black"
+    app:tabIndicator="@drawable/tab_selector"
+    app:tabIndicatorHeight="10dp"
+    app:tabIndicatorColor="@color/black"
+    app:tabGravity="center"
+    app:tabMode="fixed"
+    android:layout_marginBottom="1dp"
+    android:layout_gravity="bottom|center"
+    >
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="신체 변화">
+
+    </com.google.android.material.tabs.TabItem>
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="채팅 목록">
+
+    </com.google.android.material.tabs.TabItem>
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="개인 기록">
+
+    </com.google.android.material.tabs.TabItem>
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="설정">
+
+    </com.google.android.material.tabs.TabItem>
+</com.google.android.material.tabs.TabLayout>
