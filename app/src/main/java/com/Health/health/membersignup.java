@@ -18,10 +18,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class membersignup extends AppCompatActivity {
     private static final String TAG="RegisterActivity";
@@ -50,6 +54,7 @@ public class membersignup extends AppCompatActivity {
         mName = (EditText)findViewById(R.id.name);
         mregiser_btn = (Button)findViewById(R.id.register);
 
+
         mregiser_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,8 +62,14 @@ public class membersignup extends AppCompatActivity {
                 String pwd=mPasswordText.getText().toString().trim();
                 String pwdc=mPasswordcText.getText().toString().trim();
 
+                Log.e("email",email);
+                Log.e("pwd",pwd);
                 if(pwd.equals(pwdc)){
                     Log.d(TAG,"등록 버튼"+email+","+pwd);
+                    if (email.isEmpty()==true || pwd.isEmpty()==true){
+                        Toast.makeText(membersignup.this,"공백이 존재합니다.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final ProgressDialog mDialog = new ProgressDialog(membersignup.this);
                     mDialog.setTitle("가입 진행중입니다.");
                     mDialog.show();
@@ -80,6 +91,7 @@ public class membersignup extends AppCompatActivity {
                                 hashMap.put("name",name);
                                 account_type=getIntent().getIntExtra("account_type",0);
 //                                String user_id=firebaseAuth.getCurrentUser().getUid();
+                                Log.e("account_type", String.valueOf(account_type));
                                 hashMap.put("account_type", String.valueOf(account_type));
                                 if (account_type==0){
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -108,12 +120,13 @@ public class membersignup extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(membersignup.this,"비밀번호가 틀렸습니다. 다시 입력해주세요.",Toast.LENGTH_SHORT).show();
-
                     return;
                 }
             }
         });
     }
+
+
     public boolean onSupportNavigatorUp(){
         onBackPressed();
         return super.onSupportNavigateUp();

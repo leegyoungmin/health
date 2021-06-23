@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this,membertab.class);
                             startActivity(intent);
                         }
-                        else{
+                        if(currentuser.equals(snapshot.child("trainer").child(currentuser).getKey())){
                             Intent intent = new Intent(MainActivity.this,trainertab.class);
                             startActivity(intent);
                         }
-                        Log.e("check_type",snapshot.child("Users").child(currentuser).getKey());
+                        Log.e("check_type", String.valueOf(snapshot.child("Users").child(currentuser).getValue()));
                     }
 
                     @Override

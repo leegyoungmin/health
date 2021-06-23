@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="회원가입"
+        android:text="본인인증"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="50dp"
@@ -20,13 +20,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_frame"
+        android:id="@+id/phone_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="60dp"
+        android:orientation="vertical"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,91 +36,95 @@
         app:passwordToggleEnabled="false"
         android:baselineAligned="false">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name"
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="name"
+            android:hint="Phone"
             android:background="@color/white"
             android:layout_gravity="center"
-            android:gravity="left">
+            android:gravity="left"
+            android:inputType="numberDecimal">
 
         </com.google.android.material.textfield.TextInputEditText>
+        <Button
+            android:id="@+id/send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="인증번호 발송">
+
+        </Button>
+
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_frame"
+    <LinearLayout
+        android:id="@+id/auth_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="60dp"
+        android:orientation="horizontal"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_frame"
+        app:layout_constraintTop_toBottomOf="@+id/phone_frame"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/auth_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="인증번호를 입력해주세요."
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+        <Button
+            android:id="@+id/auth_check"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:text="인증하기"
+            android:gravity="center">
+
+        </Button>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/center_code_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="60dp"
+        android:orientation="vertical"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_frame"
         app:passwordToggleEnabled="false"
-        android:baselineAligned="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="email"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:gravity="left">
-
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@id/password_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="60dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_frame"
-        app:passwordToggleEnabled="true"
         android:baselineAligned="false">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
+            android:id="@+id/center_code"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="password"
+            android:hint="Center Code"
             android:background="@color/white"
             android:layout_gravity="center"
             android:gravity="left">
 
         </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_c_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="60dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_frame"
-        app:passwordToggleEnabled="true"
-        android:baselineAligned="false">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_c"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="password_c"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:gravity="left">
+            android:layout_height="wrap_content"
+            android:text="\n귀하가 가입된 피트니스 센터의 고유번호를 입력해주세요.\n 개인 가입의 경우는 공백으로 놔두세요.\n"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            android:gravity="center">
 
-        </com.google.android.material.textfield.TextInputEditText>
+        </TextView>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -129,11 +135,11 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="60dp"
         android:backgroundTint="@color/white"
-        android:text="회원가입"
+        android:text="진행하기"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_c_frame">
+        app:layout_constraintTop_toBottomOf="@+id/center_code_frame">
 
     </Button>
 
