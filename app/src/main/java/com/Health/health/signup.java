@@ -18,27 +18,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
-public class membersignup extends AppCompatActivity {
+public class signup extends AppCompatActivity {
     private static final String TAG="RegisterActivity";
     EditText mEmailText,mPasswordText,mPasswordcText,mName;
     Button mregiser_btn;
     int account_type;
     private FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
+    String PhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_membersignup);
+        setContentView(R.layout.activity_signup);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Create Account");
@@ -67,13 +64,13 @@ public class membersignup extends AppCompatActivity {
                 if(pwd.equals(pwdc)){
                     Log.d(TAG,"등록 버튼"+email+","+pwd);
                     if (email.isEmpty()==true || pwd.isEmpty()==true){
-                        Toast.makeText(membersignup.this,"공백이 존재합니다.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(signup.this,"공백이 존재합니다.",Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    final ProgressDialog mDialog = new ProgressDialog(membersignup.this);
+                    final ProgressDialog mDialog = new ProgressDialog(signup.this);
                     mDialog.setTitle("가입 진행중입니다.");
                     mDialog.show();
-                    firebaseAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(membersignup.this, new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(signup.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
@@ -90,9 +87,12 @@ public class membersignup extends AppCompatActivity {
                                 hashMap.put("email",email);
                                 hashMap.put("name",name);
                                 account_type=getIntent().getIntExtra("account_type",0);
+                                PhoneNumber = getIntent().getStringExtra("PhoneNumber");
+                                Log.e("PhoneNumber",PhoneNumber);
 //                                String user_id=firebaseAuth.getCurrentUser().getUid();
                                 Log.e("account_type", String.valueOf(account_type));
-                                hashMap.put("account_type", String.valueOf(account_type));
+                                hashMap.put("PhoneNumber",PhoneNumber);
+                                hashMap.put("AccountType", String.valueOf(account_type));
                                 if (account_type==0){
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference reference = database.getReference("Users");
@@ -100,26 +100,26 @@ public class membersignup extends AppCompatActivity {
                                 }
                                 else{
                                     FirebaseDatabase database =FirebaseDatabase.getInstance();
-                                    DatabaseReference reference = database.getReference("trainer");
+                                    DatabaseReference reference = database.getReference("Trainer");
                                     reference.child(uid).setValue(hashMap);
                                 }
 
-                                Intent intent = new Intent(membersignup.this,MainActivity.class);
+                                Intent intent = new Intent(signup.this,MainActivity.class);
                                 startActivity(intent);
                                 finish();
-                                Toast.makeText(membersignup.this,"회원가입에 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(signup.this,"회원가입에 성공하였습니다.",Toast.LENGTH_SHORT).show();
 
                             }
                             else{
                                 mDialog.dismiss();
-                                Toast.makeText(membersignup.this,"이미 존재하는 아이디 입니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(signup.this,"이미 존재하는 아이디 입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         }
                     });
                 }
                 else{
-                    Toast.makeText(membersignup.this,"비밀번호가 틀렸습니다. 다시 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(signup.this,"비밀번호가 틀렸습니다. 다시 입력해주세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

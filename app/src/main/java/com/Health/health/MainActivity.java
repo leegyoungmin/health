@@ -38,17 +38,16 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(currentuser.equals(snapshot.child("Users").child(currentuser).getKey())){
-                            Intent intent = new Intent(MainActivity.this,membertab.class);
-                            startActivity(intent);
-                        }
-                        if(currentuser.equals(snapshot.child("trainer").child(currentuser).getKey())){
+                        Log.e("Userin", String.valueOf(snapshot.child("Users").child(currentuser).child("AccountType").getValue()));
+                        if(snapshot.child("Users").child(currentuser).child("AccountType").getValue()==null){
                             Intent intent = new Intent(MainActivity.this,trainertab.class);
                             startActivity(intent);
                         }
-                        Log.e("check_type", String.valueOf(snapshot.child("Users").child(currentuser).getValue()));
+                        else{
+                            Intent intent = new Intent(MainActivity.this,membertab.class);
+                            startActivity(intent);
+                        }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Log.e("error", String.valueOf(error));
