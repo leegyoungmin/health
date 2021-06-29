@@ -53,14 +53,14 @@
 
         </com.google.android.material.tabs.TabItem>
     </com.google.android.material.tabs.TabLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/tab_layout"
+        app:layout_constraintBottom_toTopOf="@id/tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="20dp">
         <ListView
             android:id="@+id/listview1"
             android:layout_width="match_parent"
@@ -77,129 +77,212 @@
             >
 
         </ListView>
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/constrate1"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="gone">
+            android:id="@+id/scrollView1">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/textinput1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:orientation="horizontal"
-                android:id="@+id/linear1">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textView"
+
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/calendar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="입력할 날짜를 눌러주세요."
-                    android:textColor="@android:color/black"
-                    android:visibility="gone">
-
-                </TextView>
+                    app:layout_constraintBottom_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/base"
+                    app:mcv_selectionColor="@color/purple_700"
+                    app:mcv_calendarMode="week"
+                    android:paddingRight="50dp"
+                    android:paddingLeft="50dp"
+                    >
+                </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
                 <TextView
-                    android:id="@+id/datepicker"
+                    android:id="@+id/base"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@color/purple_700"
-                    android:backgroundTint="@color/purple_700"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="날짜"
-                    android:textColor="@color/white"
+                    android:text="기본 기록"
+                    android:layout_margin="20dp"
+                    android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:visibility="gone">
+                    app:layout_constraintBottom_toTopOf="@+id/inputtext1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/calendar">
 
                 </TextView>
 
-            </LinearLayout>
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinput1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                app:layout_constraintBottom_toTopOf="@id/textinput2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/weight"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputtext1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="오늘의 몸무게를 입력해주세요."
-                    android:inputType="number"
-                    android:textSize="15dp">
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintBottom_toTopOf="@id/inputtext2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/calendar"
 
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="오늘의 몸무게를 기록해주세요."/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinput2"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
-                app:layout_constraintBottom_toTopOf="@id/textinput3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textinput1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fatrate"
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputtext2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="오늘의 체지방률을 입력해주세요."
-                    android:inputType="number"
-                    android:textSize="15dp">
+                    app:layout_constraintBottom_toTopOf="@+id/inputtext3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inputtext1"
 
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinput3"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
-                app:layout_constraintBottom_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textinput2">
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="오늘의 체지방률을 기록해주세요."/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/musclemass"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputtext3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="오늘의 근육량을 입력해주세요."
-                    android:inputType="number"
-                    android:textSize="15dp">
+                    app:layout_constraintBottom_toBottomOf="@+id/diet"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inputtext2"
 
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="오늘의 근골격량을 기록해주세요."/>
 
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/diet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="오늘의 식단"
+                    app:layout_constraintBottom_toTopOf="@+id/card1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inputtext3"
+                    android:textSize="20dp"
+                    android:textColor="@color/black">
+
+                </TextView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toTopOf="@id/card2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/diet"
+                    android:layout_margin="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:scaleType="centerCrop"
+                            android:layout_weight="0.8"
+                            app:riv_corner_radius_top_left="20dp"
+                            app:riv_corner_radius_top_right="20dp"
+                            app:riv_border_color="#333333"
+                            app:riv_mutate_background="true"
+                            app:riv_oval="false"
+                            android:src="@drawable/example_1">
+
+                        </com.makeramen.roundedimageview.RoundedImageView>
+                        <TextView
+                            android:clickable="true"
+                            android:layout_margin="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            android:text="아침 식단"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="20dp">
+
+                        </TextView>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card1"
+                    android:layout_margin="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:scaleType="centerCrop"
+                            android:layout_weight="0.8"
+                            app:riv_corner_radius_top_left="20dp"
+                            app:riv_corner_radius_top_right="20dp"
+                            app:riv_border_color="#333333"
+                            app:riv_mutate_background="true"
+                            app:riv_oval="false"
+                            android:src="@drawable/example_2">
+
+                        </com.makeramen.roundedimageview.RoundedImageView>
+                        <TextView
+                            android:layout_margin="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            android:text="점심 식단"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="20dp">
+
+                        </TextView>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

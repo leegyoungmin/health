@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class auth extends AppCompatActivity {
     EditText code,phone,auth_code;
     Button next,send,auth_c;
-    String code_value,mPhone,replace_Phone,mAuth_code,PhoneNumber;
+    String code_value,mPhone,replace_Phone,mAuth_code,PhoneNumber,mSmsCode;
 
     private static final String TAG = "PhoneAuthActivity";
 
@@ -94,6 +94,7 @@ public class auth extends AppCompatActivity {
                             auth_code.setBackgroundColor(Color.GRAY);
                             auth_c.setBackgroundColor(Color.GRAY);
                             signInWithPhoneAuthCredential(credential);
+                            mSmsCode=credential.getSmsCode();
 
                         }
                         else{
@@ -226,6 +227,9 @@ public class auth extends AppCompatActivity {
             public void onClick(View v) {
 //                String PhoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
                 //Log.e("auth_phonenumber",PhoneNumber);
+                Intent intent = new Intent(auth.this, signup.class);
+                intent.putExtra("VerificationId",mVerificationId);
+                intent.putExtra("SmsCode",mSmsCode);
 
                 if (phone.getText().toString().length()==0){
                     Toast.makeText(auth.this,"핸드폰 인증을 완료해주세요.",Toast.LENGTH_SHORT).show();
@@ -235,7 +239,7 @@ public class auth extends AppCompatActivity {
                     if(code.getText().toString().isEmpty()||code.getText().toString().length()==0){
 
                         Toast.makeText(auth.this,"회원으로 가입을 시작합니다.",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(auth.this, signup.class);
+
                         intent.putExtra("PhoneNumber",phone.getText().toString());
                         intent.putExtra("account_type",0);
                         startActivity(intent);
