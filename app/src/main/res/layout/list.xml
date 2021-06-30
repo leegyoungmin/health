@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:id="@+id/scrollView1"
+android:orientation="horizontal">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textView1"
+            app:mcv_selectionColor="@color/purple_700"
+            app:mcv_calendarMode="week"
+            app:mcv_selectionMode="single"
+            app:mcv_showOtherDates="all"
+            >
+
+        </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textinput1"
+
+            android:text="기본 기록"
+            android:textSize="20dp"
+            android:textColor="@color/black">
+
+        </TextView>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textView1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textinput2"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputtextedit1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="오늘의 몸무게를 기록해주세요."
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textinput1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textinput3"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputtextedit2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="오늘의 체지방률을 기록해주세요."
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textinput2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textView2"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputtextedit3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="오늘의 근골격량을 기록해주세요."
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/textinput3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textView2"
+            android:text="오늘의 식단"
+            android:textSize="20dp"
+            android:textColor="@color/black">
+
+        </TextView>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingTop="20dp">
+            <TableRow>
+                <ImageButton
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/example_1"
+                    android:scaleType="centerCrop">
+
+                </ImageButton>
+                <ImageButton
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/example_1"
+                    android:scaleType="centerCrop">
+
+                </ImageButton>
+                <ImageButton
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/example_1"
+                    android:scaleType="centerCrop">
+
+                </ImageButton>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="아침식사"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black">
+
+                </TextView>
+                <TextView
+                    android:text="점심식사"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black">
+
+                </TextView>
+                <TextView
+                    android:text="저녁식사"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black">
+
+                </TextView>
+            </TableRow>
+
+        </TableLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
