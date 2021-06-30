@@ -1,7 +1,6 @@
-package com.Health.health;
+package com.Health.health.Authentication;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,13 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.Health.health.Member.membertab;
+import com.Health.health.R;
+import com.Health.health.Trainer.trainertab;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -40,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Log.e("Userin", String.valueOf(snapshot.child("Users").child(currentuser).child("AccountType").getValue()));
                         if(snapshot.child("Users").child(currentuser).child("AccountType").getValue()==null){
-                            Intent intent = new Intent(MainActivity.this,trainertab.class);
+                            Intent intent = new Intent(MainActivity.this, trainertab.class);
                             startActivity(intent);
                         }
                         else{
-                            Intent intent = new Intent(MainActivity.this,membertab.class);
+                            Intent intent = new Intent(MainActivity.this, membertab.class);
                             startActivity(intent);
                         }
                     }

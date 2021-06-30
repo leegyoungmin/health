@@ -1,10 +1,11 @@
-package com.Health.health;
+package com.Health.health.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.Health.health.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class trainertab extends AppCompatActivity {

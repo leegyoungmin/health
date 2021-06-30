@@ -12,18 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Health">
-        <activity android:name=".trainertab"></activity>
-        <activity android:name=".auth" />
-        <activity android:name=".Login">
+        <activity android:name=".Trainer.trainertab"></activity>
+        <activity android:name=".Authentication.auth" />
+        <activity android:name=".Authentication.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".signup" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".membertab"/>
+        <activity android:name=".Authentication.signup" />
+        <activity android:name=".Authentication.MainActivity" />
+        <activity android:name=".Member.membertab"/>
     </application>
 
 </manifest>

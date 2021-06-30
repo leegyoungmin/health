@@ -19,7 +19,7 @@
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/black"
         app:tabTextColor="#707070"
-        tools:context=".membertab">
+        tools:context=".Member.membertab">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -54,21 +54,45 @@
         </com.google.android.material.tabs.TabItem>
     </com.google.android.material.tabs.TabLayout>
     <FrameLayout
+        android:id="@+id/framelayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@id/tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
         android:paddingBottom="20dp">
-        <ListView
-            android:id="@+id/listview1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            >
 
-        </ListView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/const1">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher_round"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/listview1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </ImageView>
+            <ListView
+                android:id="@+id/listview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+            </ListView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
         <ListView
             android:id="@+id/listview2"
             android:layout_width="match_parent"
@@ -80,6 +104,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:id="@+id/scrollView1">
 
             <androidx.constraintlayout.widget.ConstraintLayout

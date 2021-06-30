@@ -1,4 +1,4 @@
-package com.Health.health;
+package com.Health.health.Member;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +11,7 @@ import org.threeten.bp.LocalDate;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.Health.health.R;
 import com.google.android.material.tabs.TabLayout;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
