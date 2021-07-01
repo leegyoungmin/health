@@ -28,7 +28,7 @@
         <activity android:name=".signup" />
         <activity android:name=".MainActivity" />
         <activity android:name=".membertab"/>
-        <activity android:name=".CameraBeta"/>
+        <activity android:name=".Camera.CameraBeta"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
