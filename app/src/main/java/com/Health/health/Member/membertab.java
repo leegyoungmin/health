@@ -1,6 +1,11 @@
 package com.Health.health.Member;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,6 +31,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.Health.health.Camera.CameraBeta;
+import com.Health.health.Camera.FoodCamera;
 import com.Health.health.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,12 +51,17 @@ public class membertab extends AppCompatActivity{
     String WEIGHT = new String();
     String FAT=new String();
     String MUSCLE=new String();
-    EditText weighttext,fattext,muscletext;
+    final CharSequence[] dialogitem={"카메라로 찍기","갤러리에서 사진 가져오기"};
+//    Boolean calendar_state;
+//    EditText weighttext,fattext,muscletext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
+        if(savedInstanceState !=null){
+            onResume();
+        }
         changeView(0);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabhost);
@@ -83,8 +95,17 @@ public class membertab extends AppCompatActivity{
             case 0:
                 break;
             case 1:
+                view =inflater.inflate(R.layout.list_2,frameLayout,false);
+                MaterialCalendarView calendarView_2=view.findViewById(R.id.calendar);
+                calendarView_2.state().edit()
+                        .setFirstDayOfWeek(DayOfWeek.SUNDAY)
+                        .setMaximumDate(CalendarDay.from(LocalDate.now().getYear(),LocalDate.now().getMonth().getValue(),LocalDate.now().getDayOfMonth()))
+                        .setCalendarDisplayMode(CalendarMode.MONTHS)
+                        .commit();
                 break;
             case 2:
+                break;
+            case 3:
                 view = inflater.inflate(R.layout.list,frameLayout,false);
 
                 MaterialCalendarView calendarView=view.findViewById(R.id.calendar);
@@ -93,28 +114,44 @@ public class membertab extends AppCompatActivity{
                         .setMaximumDate(CalendarDay.from(LocalDate.now().getYear(),LocalDate.now().getMonth().getValue(),LocalDate.now().getDayOfMonth()))
                         .setCalendarDisplayMode(CalendarMode.WEEKS)
                         .commit();
-                weighttext=view.findViewById(R.id.inputtextedit1);
-                fattext=view.findViewById(R.id.inputtextedit2);
-                muscletext=view.findViewById(R.id.inputtextedit3);
+                calendarView.setDateSelected(CalendarDay.today(),true);
 
                 calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+
                     @Override
                     public void onDateSelected(@NonNull MaterialCalendarView widget, CalendarDay date, boolean selected) {
-                        if (selected==false){
-                            weighttext.setClickable(false);
-                            fattext.setClickable(false);
-                            muscletext.setClickable(false);
-                            Toast.makeText(membertab.this,"입력할 날짜를 선택해주세요.",Toast.LENGTH_SHORT).show();
-                        }
+                        Log.e("selected", String.valueOf(selected));
+
                         int mYear = date.getYear();
                         int mMonth = date.getMonth();
                         int mDay = date.getDay();
+
                     }
                 });
-
-                weighttext.addTextChangedListener(textWatcher);
-                fattext.addTextChangedListener(textWatcher);
-                muscletext.addTextChangedListener(textWatcher);
+                view.findViewById(R.id.food1).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(membertab.this, android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth);
+                        dialog.setTitle("아침 식사").setItems(dialogitem, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    int REQUEST_CODE = 200;
+                                    Intent intent = new Intent(membertab.this, FoodCamera.class);
+                                    intent.putExtra("camera", which);
+                                    startActivityForResult(intent,200);
+                                } else {
+                                    int REQUEST_CODE = 200;
+                                    Intent intent = new Intent(membertab.this, FoodCamera.class);
+                                    intent.putExtra("camera", which);
+                                    startActivityForResult(intent,200);
+                                }
+                            }
+                        });
+                        dialog.setCancelable(false);
+                        dialog.show();
+                    }
+                });
 
                 Log.e("WEIGHT",WEIGHT);
                 Log.e("FAT",FAT);
@@ -124,39 +161,15 @@ public class membertab extends AppCompatActivity{
             frameLayout.addView(view);
         }
     }
+    @Override
+    public void onActivityResult(int RequestCode,int resultcode,Intent data){
+        super.onActivityResult(RequestCode,resultcode,data);
+        if(resultcode== Activity.RESULT_OK){
+            switch (RequestCode){
+                case 200:
 
-    private final TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            }
         }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            WEIGHT = weighttext.getText().toString();
-            FAT = fattext.getText().toString();
-            MUSCLE = muscletext.getText().toString();
-
-            Log.e("WEIGHT", WEIGHT);
-            Log.e("FAT", FAT);
-            Log.e("MUSCLE", MUSCLE);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            WEIGHT=weighttext.getText().toString();
-            FAT=fattext.getText().toString();
-            MUSCLE=muscletext.getText().toString();
-            HashMap hashMap = new HashMap();
-            hashMap.put("weight",WEIGHT);
-            hashMap.put("fat",FAT);
-            hashMap.put("muscle",MUSCLE);
-
-            String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            FirebaseDatabase database =FirebaseDatabase.getInstance();
-            DatabaseReference reference = database.getReference("Users");
-            reference.child(uid).child("User_data").setValue(hashMap);
-        }
-    };
+    }
 
 }

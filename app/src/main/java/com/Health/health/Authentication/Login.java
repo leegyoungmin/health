@@ -18,9 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
-    Button signin;
-    Button signup;
-    Button Centersignup;
+    Button signin,signup,Centersignup;
+
     EditText mEmail,mPassword;
     private FirebaseAuth firebaseAuth;
 
@@ -35,6 +34,7 @@ public class Login extends AppCompatActivity {
         mEmail = (EditText)findViewById(R.id.email);
         mPassword = (EditText)findViewById(R.id.password);
         firebaseAuth = FirebaseAuth.getInstance();
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
