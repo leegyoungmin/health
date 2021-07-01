@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         currentuser=FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.e("user_id",currentuser);
 
+
+
         example.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,11 +43,18 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Log.e("Userin", String.valueOf(snapshot.child("Users").child(currentuser).child("AccountType").getValue()));
                         if(snapshot.child("Users").child(currentuser).child("AccountType").getValue()==null){
-                            Intent intent = new Intent(MainActivity.this,trainertab.class);
+
+                            //데이터베이스 현재 유저 고유 아이디 불러오기
+                            //FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                            //String uid=user !=null?user.getUid():null; //삼항연산자
+                            //uid 를 CameraBeta 로 보내기
+                            Intent intent = new Intent(MainActivity.this,CameraBeta.class);
+                            //intent.putExtra("uid",currentuser);
                             startActivity(intent);
                         }
                         else{
-                            Intent intent = new Intent(MainActivity.this,membertab.class);
+                            Intent intent = new Intent(MainActivity.this,CameraBeta.class);
+                            //intent.putExtra("uid",currentuser);
                             startActivity(intent);
                         }
                     }
@@ -55,5 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 }

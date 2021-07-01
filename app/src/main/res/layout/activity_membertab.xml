@@ -61,12 +61,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingBottom="20dp">
+
         <ListView
             android:id="@+id/listview1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
         </ListView>
         <ListView
@@ -283,6 +283,7 @@
 
 
         </ScrollView>
+
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
