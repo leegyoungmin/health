@@ -1,8 +1,9 @@
-package com.Health.health;
+package com.Health.health.Authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.Health.health.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,6 +36,7 @@ public class Login extends AppCompatActivity {
         mPassword = (EditText)findViewById(R.id.password);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //회원가입 클릭 시 핸드폰 인증 페이지 이동
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +44,7 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //로그인 버튼 클릭 시 비밀번호를 통한 로그인
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +59,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Intent intent = new Intent(Login.this,MainActivity.class);
+                            Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -75,5 +78,40 @@ public class Login extends AppCompatActivity {
                 });
            }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(this.getClass().getName(),"onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(this.getClass().getName(),"onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(this.getClass().getName(),"onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(this.getClass().getName(),"onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(this.getClass().getName(),"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(this.getClass().getName(),"onDestroy");
     }
 }

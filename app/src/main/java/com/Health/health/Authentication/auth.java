@@ -1,8 +1,9 @@
-package com.Health.health;
+package com.Health.health.Authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.Health.health.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -31,7 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.Inet4Address;
 import java.util.concurrent.TimeUnit;
 
 public class auth extends AppCompatActivity {
@@ -66,12 +67,7 @@ public class auth extends AppCompatActivity {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                // This callback will be invoked in two situations:
-                // 1 - Instant verification. In some cases the phone number can be instantly
-                //     verified without needing to send or enter a verification code.
-                // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                //     detect the incoming verification SMS and perform verification without
-                //     user action.
+                //핸드폰 인증 성공 및 실패 시 UI 변경 및 Toast
                 auth_c.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -94,7 +90,6 @@ public class auth extends AppCompatActivity {
                             auth_code.setBackgroundColor(Color.GRAY);
                             auth_c.setBackgroundColor(Color.GRAY);
                             signInWithPhoneAuthCredential(credential);
-                            mSmsCode=credential.getSmsCode();
 
                         }
                         else{
@@ -122,16 +117,12 @@ public class auth extends AppCompatActivity {
                     // The SMS quota for the project has been exceeded
                 }
 
-                // Show a message and update the UI
             }
 
+            //문자 발송 시 UI 변경 사항 및 Toast
             @Override
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
-                // The SMS verification code has been sent to the provided phone number, we
-                // now need to ask the user to enter the code and then construct a credential
-                // by combining the code with a verification ID.
-                // Save verification ID and resending token so we can use them later
                 Toast.makeText(auth.this,"인증번호가 전송되었습니다. 1분안에 완료해주세요.",Toast.LENGTH_SHORT).show();
                 mVerificationId = verificationId;
                 mResendToken = token;
@@ -221,6 +212,8 @@ public class auth extends AppCompatActivity {
 
             }
         });
+
+        // 회원가입 버튼을 통해서 트레이너 및 회원 판단 후 회원가입 페이지로 이동
         next.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -282,6 +275,8 @@ public class auth extends AppCompatActivity {
 
 
     }
+
+    //핸드폰 인증 완료 후 토스트 출력 (성공 및 실패 판단 로직)
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -303,11 +298,46 @@ public class auth extends AppCompatActivity {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                                 auth_code.setTextColor(Color.RED);
-                                Toast.makeText(auth.this,"잘못된 인증 번호 입니다. 다시 입력해주세요.",Toast.LENGTH_SHORT).show();
+                              Toast.makeText(auth.this,"잘못된 인증 번호 입니다. 다시 입력해주세요.",Toast.LENGTH_SHORT).show();
 
                             }
                         }
                     }
                 });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(this.getClass().getName(),"onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(this.getClass().getName(),"onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(this.getClass().getName(),"onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(this.getClass().getName(),"onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(this.getClass().getName(),"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(this.getClass().getName(),"onDestroy");
     }
 }

@@ -5,7 +5,7 @@
     android:id="@+id/tab_layout"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    tools:context=".trainertab"
+    tools:context=".Trainer.trainertab"
     android:layout_marginTop="15dp"
     app:tabTextColor="#707070"
     app:tabSelectedTextColor="@color/black"

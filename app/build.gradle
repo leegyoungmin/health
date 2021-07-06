@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
     buildToolsVersion "30.0.3"
 
     defaultConfig {
@@ -56,6 +56,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     //implementation 'com.google.firebase:firebase-analytics'
 
+    //Notification//
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
 //Calender Options
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -69,4 +72,6 @@ dependencies {
 //Bumptech
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+
 }
