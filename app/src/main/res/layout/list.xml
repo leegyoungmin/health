@@ -90,6 +90,7 @@ android:orientation="horizontal">
 
                 </TextView>
                 <TextView
+                    android:id="@+id/food2text"
                     android:text="점심식사"
                     android:textSize="15dp"
                     android:layout_gravity="center"
@@ -97,6 +98,7 @@ android:orientation="horizontal">
 
                 </TextView>
                 <TextView
+                    android:id="@+id/food3text"
                     android:text="저녁식사"
                     android:textSize="15dp"
                     android:layout_gravity="center"

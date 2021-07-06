@@ -1,17 +1,17 @@
-package com.Health.health.Camera;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
+package com.Health.health.Member;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,81 +21,107 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
+import com.Health.health.Camera.FoodCamera;
 import com.Health.health.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+import org.threeten.bp.YearMonth;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
-public class CameraBeta extends AppCompatActivity {
+
+public class FoodActivity extends AppCompatActivity {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int GALLERY_REQUEST_CODE = 105;
-    private ImageView selectedImage;
-    private Button cameraBtn,galleryBtn;
+
+    final String[] dialogMessage = new String[]{"카메라로 찍기","갤러리에서 선택하기"};
+
+    String title;
+    Button save;
+    TextView real_title;
     private String currentPhotoPath;
     private StorageReference storageReference;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
+
+    ImageView imageView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.camerabeta);
-//
-//
-//        selectedImage=findViewById(R.id.imageView);
-//        cameraBtn=findViewById(R.id.camerabtn);
-//        galleryBtn=findViewById(R.id.gallerybtn);
+        setContentView(R.layout.activity_food);
 
+        title =getIntent().getStringExtra("title");
+        real_title=findViewById(R.id.title);
+        real_title.setText(title);
 
-        mAuth=FirebaseAuth.getInstance();
-        firebaseDatabase=FirebaseDatabase.getInstance();
+        Button save=(Button)findViewById(R.id.save);
 
-
-
-
-        storageReference= FirebaseStorage.getInstance().getReference();
-
-        cameraBtn.setOnClickListener(new View.OnClickListener() {
+        imageView = findViewById(R.id.food_image);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Toast.makeText(MainActivity.this,"Camera Btn is Clicked.",Toast.LENGTH_SHORT).show();
-                askCameraPermission();      //카메라 권한 여부
+            public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(FoodActivity.this, android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
+                        .setItems(dialogMessage, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(i==0){
+                                    askCameraPermission();
+                                }
+                                else if(i==1){
+                                    Intent gallay = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(gallay,GALLERY_REQUEST_CODE);
+                                }
+                            }
+                        });
+                dialog.show();
             }
         });
-
-        galleryBtn.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Toast.makeText(MainActivity.this,"Gallery Btn is Clicked.",Toast.LENGTH_SHORT).show();
-                Intent gallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(gallery,GALLERY_REQUEST_CODE);
+            public void onClick(View view) {
+                Intent intent  = new Intent(FoodActivity.this,membertab.class);
+                setResult(RESULT_OK,intent);
+                finish();
             }
         });
-
-
-
-
     }
-    //카메라 권한 여부
-    private void askCameraPermission() {
+    public void askCameraPermission() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA},CAMERA_PERM_CODE);
         }else{
@@ -125,11 +151,13 @@ public class CameraBeta extends AppCompatActivity {
                 File f=new File(currentPhotoPath);
 
                 //selectedImage.setImageURI(Uri.fromFile(f));
-                Log.d(TAG,"Absolute Url of Image is "+Uri.fromFile(f));
+                Log.d(TAG,"Absolute Url of Image is "+ Uri.fromFile(f));
                 Intent mediaScanIntent=new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 Uri contentUri=Uri.fromFile(f);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
+                Log.e("name",f.getName());
+
 //
                 //Intent getIntent=getIntent();
                 //String userCoreId=getIntent.getStringExtra("uid");
@@ -144,9 +172,12 @@ public class CameraBeta extends AppCompatActivity {
         }
         if(requestCode==GALLERY_REQUEST_CODE){
             if(resultCode== Activity.RESULT_OK){
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
                 Uri contentUri=data.getData();
-                String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName="JPEG_"+timeStamp+"."+getFileExt(contentUri);
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String imageFileName="food"+uid+"."+getFileExt(contentUri);
                 Log.d(TAG,"onActivityResult: Gallery Image Uri:  "+imageFileName);
                 //selectedImage.setImageURI(contentUri);
 //
@@ -155,54 +186,94 @@ public class CameraBeta extends AppCompatActivity {
                 //파일명저장
                 //firebaseDatabase.getReference().child("Users").child(userCoreId).setValue(imageFileName);
 
+                Log.e("example_1",LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM")));
                 uploadImageToFirebase(imageFileName,contentUri);
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                database.getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("foodPhoto").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        Log.e("foodPhoto",snapshot.getValue().toString());
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
             }
         }
 
     }
 
-    private void uploadImageToFirebase(String name, Uri contentUri) {
+    public void uploadImageToFirebase(String name, Uri contentUri) {
 
-        String currentuser = mAuth.getCurrentUser().getUid();
+        String currentuser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.d(currentuser,"checking");
-        StorageReference image=storageReference.child("pictures/"+name);
-
+        StorageReference image = FirebaseStorage.getInstance().getReference().child("food/" + name);
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(imageView);
+                        Log.e("URI", String.valueOf(uri));
                         Log.d("tag","onSuccess: Uploaded Image URI is"+uri.toString());
-                        Picasso.get().load(uri).into(selectedImage);
-                        firebaseDatabase
-                                .getReference("Users")
-                                .child(currentuser)
-                                .child("PhotoUrl")
-                                .setValue(uri.toString());
+                        Log.e("real_title",real_title.getText().toString());
+                        if(title.equals("아침 식사")){
+                            FirebaseDatabase.getInstance()
+                                    .getReference("Users")
+                                    .child(currentuser)
+                                    .child("foodPhoto")
+                                    .child(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                                    .child("1")
+                                    .setValue(uri.toString());
+                        }
+                        else if(title.equals("점심 식사")){
+                            FirebaseDatabase.getInstance()
+                                    .getReference("Users")
+                                    .child(currentuser)
+                                    .child("foodPhoto")
+                                    .child(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                                    .child("2")
+                                    .setValue(uri.toString());
+                        }
+                        else if(title.equals("저녁 식사")){
+                            FirebaseDatabase.getInstance()
+                                    .getReference("Users")
+                                    .child(currentuser)
+                                    .child("foodPhoto")
+                                    .child(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                                    .child("3")
+                                    .setValue(uri.toString());
+                        }
+                        else{
+                            Toast.makeText(FoodActivity.this,"예기치 못한 오류가 발생하였습니다.",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
-                Toast.makeText(CameraBeta.this,"Image Is Uploaded.",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(CameraBeta.this,"Upload Failed",Toast.LENGTH_SHORT).show();
+                Log.e("에러",e.toString());
             }
         });
     }
 
 
 
-    private String getFileExt(Uri contentUri) {
+    public String getFileExt(Uri contentUri) {
         ContentResolver c=getContentResolver();
         MimeTypeMap mime=MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
 
-    private File createImageFile() throws IOException {
-        String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    public File createImageFile() throws IOException {
+        String timeStamp=LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         String imageFileName="TEST_"+timeStamp+"_";
         File storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         //겔러리 저장 안할 경우
@@ -218,7 +289,7 @@ public class CameraBeta extends AppCompatActivity {
         return image;
     }
 
-    private void dispatchTakePictureIntent() {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -240,41 +311,4 @@ public class CameraBeta extends AppCompatActivity {
             }
         }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e(this.getClass().getName(),"onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e(this.getClass().getName(),"onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(this.getClass().getName(),"onPause");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e(this.getClass().getName(),"onRestart");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(this.getClass().getName(),"onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(this.getClass().getName(),"onDestroy");
-    }
-
 }

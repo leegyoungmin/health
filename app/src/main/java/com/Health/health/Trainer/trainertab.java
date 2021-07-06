@@ -2,6 +2,7 @@ package com.Health.health.Trainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -32,5 +33,41 @@ public class trainertab extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(this.getClass().getName(),"onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(this.getClass().getName(),"onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(this.getClass().getName(),"onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(this.getClass().getName(),"onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(this.getClass().getName(),"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(this.getClass().getName(),"onDestroy");
     }
 }

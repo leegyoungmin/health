@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Health">
-        <activity android:name=".Trainer.trainertab"></activity>
+        <activity android:name=".Member.FoodActivity"></activity>
+        <activity android:name=".Trainer.trainertab" />
         <activity android:name=".Authentication.auth" />
         <activity android:name=".Authentication.Login">
             <intent-filter>
@@ -23,7 +27,18 @@
         </activity>
         <activity android:name=".Authentication.signup" />
         <activity android:name=".Authentication.MainActivity" />
-        <activity android:name=".Member.membertab"/>
+        <activity android:name=".Member.membertab" />
+        <activity android:name=".Camera.FoodCamera" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

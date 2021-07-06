@@ -28,8 +28,11 @@ import com.Health.health.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,7 +42,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
@@ -152,9 +158,13 @@ public class FoodCamera extends AppCompatActivity {
         }
         if(requestCode==GALLERY_REQUEST_CODE){
             if(resultCode== Activity.RESULT_OK){
+
+                DatabaseReference reference = firebaseDatabase.getReference();
+
                 Uri contentUri=data.getData();
-                String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName="JPEG_"+timeStamp+"."+getFileExt(contentUri);
+                selectedImage.setImageURI(contentUri);
+                String timeStamp=new SimpleDateFormat("yyyyMMdd").format(new Date());
+                String imageFileName="food"+timeStamp+"."+getFileExt(contentUri);
                 Log.d(TAG,"onActivityResult: Gallery Image Uri:  "+imageFileName);
                 //selectedImage.setImageURI(contentUri);
 //
@@ -162,9 +172,20 @@ public class FoodCamera extends AppCompatActivity {
                 //String userCoreId=getIntent.getStringExtra("uid");
                 //파일명저장
                 //firebaseDatabase.getReference().child("Users").child(userCoreId).setValue(imageFileName);
-
                 uploadImageToFirebase(imageFileName,contentUri);
-                onResume();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                database.getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("foodPhoto").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        Log.e("foodPhoto",snapshot.getValue().toString());
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
             }
         }
 
@@ -177,12 +198,14 @@ public class FoodCamera extends AppCompatActivity {
         StorageReference image=storageReference.child("pictures/"+name);
 
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        Log.e("URI", String.valueOf(uri));
                         Log.d("tag","onSuccess: Uploaded Image URI is"+uri.toString());
                         Picasso.get().load(uri).into(selectedImage);
                         firebaseDatabase
@@ -192,12 +215,12 @@ public class FoodCamera extends AppCompatActivity {
                                 .setValue(uri.toString());
                     }
                 });
-                Toast.makeText(FoodCamera.this,"Image Is Uploaded.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FoodCamera.this,"식단이 저장되었습니다.",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(FoodCamera.this,"Upload Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FoodCamera.this,"식단을 저장하는데 실패했습니다.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -248,6 +271,42 @@ public class FoodCamera extends AppCompatActivity {
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(this.getClass().getName(),"onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(this.getClass().getName(),"onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(this.getClass().getName(),"onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(this.getClass().getName(),"onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(this.getClass().getName(),"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(this.getClass().getName(),"onDestroy");
     }
 
 }
