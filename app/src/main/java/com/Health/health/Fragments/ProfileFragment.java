@@ -76,7 +76,9 @@ public class ProfileFragment extends Fragment {
 
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("MyUsers").child(fuser.getUid());
+        DatabaseReference ffuser = FirebaseDatabase.getInstance().getReference("Users").child("uid");
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(ffuser.getKey());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override

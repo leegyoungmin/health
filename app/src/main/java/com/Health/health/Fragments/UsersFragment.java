@@ -132,18 +132,21 @@ public class UsersFragment extends Fragment {
 
     private void ReadUsers(){
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference user2=FirebaseDatabase.getInstance().getReference("Users");
         String currentUser=FirebaseAuth.getInstance().getUid();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        Trainee = new ArrayList<>();
-
-        DatabaseReference Traineereference=FirebaseDatabase
+        /*DatabaseReference Traineereference=FirebaseDatabase
                 .getInstance()
                 .getReference("Trainer")
-                .child(currentUser);
+                .child(currentUser);*/
 
 
-        Traineereference.child("Trainee").addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Trainee = new ArrayList<>();
+
+
+        reference.child("Trainer")
+                .child(currentUser)
+                .child("Trainee").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot3) {
 
@@ -151,7 +154,6 @@ public class UsersFragment extends Fragment {
                     Log.d("snapshot1", value.getValue().toString().trim());
                     Trainee.add(value.getValue().toString());
                 }
-
             }
 
             @Override
@@ -160,19 +162,22 @@ public class UsersFragment extends Fragment {
             }
         });
 
-        for(int i=0; i< Trainee.size(); i++){
-            int finalI = i;
-            reference.addValueEventListener(new ValueEventListener() {
+
+            reference
+                    .child("Users")
+                    .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     mUsers.clear();
                     for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                         Users user = snapshot.getValue(Users.class);
+                        String key=snapshot.getKey();
                         assert user != null;
-                        if(Trainee.get(finalI).equals(firebaseUser.getUid())){
-                            mUsers.add(user);
-                        }
-
+                        //for(int i=0; i< Trainee.size(); i++) {
+                            if (Trainee.contains(key)) {
+                                mUsers.add(user);
+                            }
+                       //}
                         userAdapter = new UserAdapter(getContext(),mUsers,false);
                         recyclerView.setAdapter(userAdapter);
 
@@ -184,11 +189,6 @@ public class UsersFragment extends Fragment {
 
                 }
             });
-        }
-
-
-
-
     }
     public ArrayList<String> getBundledusercode() {
         return Bundledusercode;

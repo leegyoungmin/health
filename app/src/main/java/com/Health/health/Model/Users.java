@@ -1,12 +1,19 @@
 package com.Health.health.Model;
 
+import java.util.ArrayList;
+
 public class Users {
 
     private String id;
     private String username;
     private String imageURL;
     private String status;
-
+    private String AccountType;
+    private String PhoneNumber;
+    private ArrayList<String> Trainee;
+    private String email;
+    private String name;
+    private String uid;
 
     // 생성자
 
@@ -19,6 +26,14 @@ public class Users {
         this.username = username;
         this.imageURL = imageURL;
         this.status = status;
+    }
+
+    public Users(String accountType, String phoneNumber, String email, String name, String uid) {
+        this.AccountType = accountType;
+        this.PhoneNumber = phoneNumber;
+        this.email = email;
+        this.name = name;
+        this.uid = uid;
     }
 
     //Getter , Setter
@@ -54,5 +69,54 @@ public class Users {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public String getAccountType() {
+        return AccountType;
+    }
+
+    public void setAccountType(String accountType) {
+        AccountType = accountType;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        PhoneNumber = phoneNumber;
+    }
+
+    public ArrayList<String> getTrainee() {
+        return Trainee;
+    }
+
+    public void setTrainee(ArrayList<String> trainee) {
+        Trainee = trainee;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

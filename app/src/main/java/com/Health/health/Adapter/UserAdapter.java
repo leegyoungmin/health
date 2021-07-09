@@ -63,7 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         final Users users = mUsers.get(position);
         holder.userName.setText(users.getUsername());
         //사용자에서 프로필 Showing
-        if(users.getImageURL().equals("default")){
+        if(users.getImageURL()!=null&&users.getImageURL().equals("default")){
             holder.profileImage.setImageResource(R.drawable.personicon);
         }else{
             Glide.with(context)
