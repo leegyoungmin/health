@@ -119,6 +119,7 @@ public class membertab extends AppCompatActivity{
             case 0:
                 break;
             case 1:
+
             case 2:
                 break;
             case 3:
@@ -133,7 +134,7 @@ public class membertab extends AppCompatActivity{
                         .setCalendarDisplayMode(CalendarMode.WEEKS)
                         .commit();
                 calendarView.setDateSelected(CalendarDay.today(),true);
-                selectedDay=CalendarDay.today().getYear()+"-"+CalendarDay.today().getMonth()+"-"+CalendarDay.today().getDay();
+                  selectedDay=CalendarDay.today().getYear()+"-"+CalendarDay.today().getMonth()+"-"+CalendarDay.today().getDay();
                 Log.e("selected_day",selectedDay);
 
                 calendarView.setOnDateChangedListener(new OnDateSelectedListener() {

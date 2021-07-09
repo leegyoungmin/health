@@ -15,9 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Health">
-        <activity android:name=".Member.FoodActivity"></activity>
+        <activity android:name=".request"></activity>
+        <activity android:name=".Member.FoodActivity" />
         <activity android:name=".Trainer.trainertab" />
-        <activity android:name=".Authentication.auth" />
         <activity android:name=".Authentication.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,10 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Authentication.auth" />
         <activity android:name=".Authentication.signup" />
         <activity android:name=".Authentication.MainActivity" />
         <activity android:name=".Member.membertab" />
         <activity android:name=".Camera.FoodCamera" />
+        <activity android:name=".Interlock.InterLock" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

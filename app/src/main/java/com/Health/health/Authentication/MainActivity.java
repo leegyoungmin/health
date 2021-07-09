@@ -3,7 +3,6 @@ package com.Health.health.Authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_wait);
         currentuser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.e("user_id", currentuser);
         customProgressDialog = new CustomProgressDialog(MainActivity.this);
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         public CustomProgressDialog(Context context){
             super(context);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_wait);
         }
     }
     @Override

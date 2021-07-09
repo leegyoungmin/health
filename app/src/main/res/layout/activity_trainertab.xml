@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tab_layout"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    tools:context=".Trainer.trainertab"
-    android:layout_marginTop="15dp"
-    app:tabTextColor="#707070"
-    app:tabSelectedTextColor="@color/black"
-    app:tabIndicator="@drawable/tab_selector"
-    app:tabIndicatorHeight="10dp"
-    app:tabIndicatorColor="@color/black"
-    app:tabGravity="center"
-    app:tabMode="fixed"
-    android:layout_marginBottom="1dp"
-    android:layout_gravity="bottom|center"
-    >
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <FrameLayout
+        android:id="@+id/TrainerFrameLayout"
+        android:layout_width="408dp"
+        android:layout_height="682dp"
+        app:layout_constraintBottom_toTopOf="@+id/Trainertabhost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/Trainertabhost"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원 목록">
+        app:tabGravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabMode="fixed">
 
-    </com.google.android.material.tabs.TabItem>
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="채팅 목록">
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원목록">
 
-    </com.google.android.material.tabs.TabItem>
+        </com.google.android.material.tabs.TabItem>
 
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="나의 일지">
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채팅 목록">
 
-    </com.google.android.material.tabs.TabItem>
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="설정">
+        </com.google.android.material.tabs.TabItem>
 
-    </com.google.android.material.tabs.TabItem>
-</com.google.android.material.tabs.TabLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나의일지">
+
+        </com.google.android.material.tabs.TabItem>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설정">
+
+        </com.google.android.material.tabs.TabItem>
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
